@@ -1,4 +1,5 @@
 #include "../Headers/Common.hpp"
+#include "../Utils/ViewHelper.hpp"
 
 static id auroraHomeView;
 
