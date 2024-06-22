@@ -1,0 +1,8 @@
+Package: me.luki.aurora
+Name: Aurora
+Version: 0.9.0
+Architecture: iphoneos-arm
+Description: An awesome C application!
+Maintainer: Luki
+Author: Luki
+Section: Utilities
