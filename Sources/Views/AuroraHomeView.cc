@@ -352,7 +352,7 @@ static CFArrayRef AuroraHomeView_findRangesInString(CFStringRef string, CFString
 		sel_getUid("matchesInString:options:range:"),
 		string,
 		0,
-		{ 0, CFStringGetLength(string) }
+		(CFRange){ 0, CFStringGetLength(string) }
 	);
 
 	return (CFArrayRef)msg_with_type<CFStringRef>(matches, sel_getUid("valueForKeyPath:"), CFSTR("@unionOfObjects.range"));
