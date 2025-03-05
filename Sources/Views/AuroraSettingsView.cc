@@ -5,6 +5,8 @@ static id tableView;
 
 static id (*msgInitWithFrame)(id, SEL, CGRect, unsigned) = (__typeof(msgInitWithFrame)) objc_msgSend;
 static id (*msgSetFrame)(id, SEL, CGRect) = (__typeof(msgSetFrame)) objc_msgSend;
+static CFStringRef (*msgStringWithFormat)(Class, SEL, CFStringRef, ...) = (__typeof(msgStringWithFormat)) objc_msgSend;
+static int (*msgComponentFromDate)(id, SEL, unsigned, CFDateRef) = (__typeof(msgComponentFromDate)) objc_msgSend;
 
 static void AuroraSettingsView_setupUI(id self);
 static void AuroraSettingsView_layoutUI(id self);
@@ -47,7 +49,6 @@ static void AuroraSettingsView_setupUI(id self) {
 
 }
 
-
 static void AuroraSettingsView_layoutUI(id self) {
 
 	id topAnchor = anchorViewToView(tableView, self, "topAnchor");
@@ -71,6 +72,27 @@ static void AuroraSettingsView_layoutUI(id self) {
 
 // ! Reusable
 
+static CFStringRef AuroraSettingsView_createCopyrightLabel(void) {
+	CFDateRef currentDate = CFDateCreate(kCFAllocatorDefault, CFAbsoluteTimeGetCurrent());
+
+	int currentYear = msgComponentFromDate(
+		clsMsg(objc_getClass("NSCalendar"), sel_getUid("currentCalendar")),
+		sel_getUid("component:fromDate:"),
+		kCFCalendarUnitYear,
+		currentDate
+	);
+
+	CFStringRef copyrightLabelString = msgStringWithFormat(
+		objc_getClass("NSString"),
+		sel_getUid("stringWithFormat:"),
+		CFSTR("© 2024-%d Luki120"),
+		currentYear
+	);
+
+	CFRelease(currentDate);
+	return copyrightLabelString;
+}
+
 static id AuroraSettingsView_createFooterView(void) {
 
 	id footerView = clsMsg(objc_getClass("UIView"), sel_getUid("new"));
@@ -86,7 +108,7 @@ static id AuroraSettingsView_createFooterView(void) {
 			12
 		)
 	);
-	msg_with_type<CFStringRef>(copyrightLabel, sel_getUid("setText:"), CFSTR("© 2024 Luki120"));
+	msg_with_type<CFStringRef>(copyrightLabel, sel_getUid("setText:"), AuroraSettingsView_createCopyrightLabel());
 	msg_with_type<id>(
 		copyrightLabel,
 		sel_getUid("setTextColor:"),
