@@ -1,16 +1,11 @@
 #include "../Headers/Common.hpp"
 
 static id defaults;
-static id randomLabel;
-static id sliderValueLabel;
-static id regenerateButton;
-static id copyButton;
-static id lengthSlider;
-static id verticalStackView;
-static id horizontalStackView;
+static id randomLabel, sliderValueLabel, regenerateButton, copyButton, lengthSlider;
+static id verticalStackView, horizontalStackView;
 
 static id salmonColor = msgColorWithRed(
-	(id) objc_getClass("UIColor"),
+	objc_getClass("UIColor"),
 	sel_getUid("colorWithRed:green:blue:alpha:"),
 	1.0,
 	0.55,

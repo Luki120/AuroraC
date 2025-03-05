@@ -20,11 +20,11 @@ static id (*clsMsg)(Class, SEL) = (__typeof(clsMsg)) objc_msgSend;
 static id (*msgVariadic)(id, SEL, id, ...) = (__typeof(msgVariadic)) objc_msgSend;
 static id (*msgAddTarget)(id, SEL, id, SEL, int) = (__typeof(msgAddTarget)) objc_msgSend;
 static id (*const msgArrayInit)(Class, SEL, id, ...) = (__typeof(msgArrayInit)) objc_msgSend;
-static id (*msgColorWithRed)(id, SEL, CGFloat, CGFloat, CGFloat, CGFloat) = (__typeof(msgColorWithRed)) objc_msgSend;
+static id (*msgColorWithRed)(Class, SEL, CGFloat, CGFloat, CGFloat, CGFloat) = (__typeof(msgColorWithRed)) objc_msgSend;
 static bool (*msgBoolForKey)(id, SEL, CFStringRef) = (__typeof(msgBoolForKey)) objc_msgSend;
 
 static id auroraColor = msgColorWithRed(
-	(id) objc_getClass("UIColor"),
+	objc_getClass("UIColor"),
 	sel_getUid("colorWithRed:green:blue:alpha:"),
 	0.74,
 	0.78,
